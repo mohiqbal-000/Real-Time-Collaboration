@@ -2,28 +2,40 @@ package Controller;
 
 
 import Model.User;
-import Security.UserService;
+import Service.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 public class UserController {
 
     private final UserService userService;
 
     public UserController(UserService userService) {
+
         this.userService = userService;
     }
 
     @PostMapping("/register")
-    public User Register(@RequestBody User user){
+    public User register(@RequestBody User user){
 
-        return userService.register();
+        return userService.register(user);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
 
     public User login(@RequestBody User user){
-        return userService.login();
+
+        return userService.login(user);
     }
+    @GetMapping("/{id}")
+
+    public User getUserById(@PathVariable UUID id){
+        return userService.getUserById(id);
+    }
+
+
+
 }
